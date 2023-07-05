@@ -1,4 +1,4 @@
-#Swift Rick and Morty App
+# Swift Rick and Morty App
 An iOS swift app based on popular curtoon character Rick and Morty. 
 - Swift App
 - Followed MVVM
