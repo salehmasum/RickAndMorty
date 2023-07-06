@@ -11,9 +11,27 @@ import UIKit
 final class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         title = "Characters"
         view.backgroundColor = .systemBackground
+        
+        let request = NetworkRequest(
+            endpoint: .character,
+            queryParameters: [
+                URLQueryItem(name: "name", value: "rick"),
+                URLQueryItem(name: "status", value: "alive")
+            ]
+        )
+        
+        NetworkService.shared.execute(
+            request,
+            expecting: Character.self
+        ) { result in
+                
+        }
+        
     }
 
 }
