@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Controller to diplay Settings
 final class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {

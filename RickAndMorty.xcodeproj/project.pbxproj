@@ -19,6 +19,9 @@
 		51860B1B2A5572C7006B26A3 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51860B1A2A5572C7006B26A3 /* LocationViewController.swift */; };
 		51860B1D2A5572D1006B26A3 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51860B1C2A5572D1006B26A3 /* EpisodeViewController.swift */; };
 		51860B1F2A5572F0006B26A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51860B1E2A5572F0006B26A3 /* SettingsViewController.swift */; };
+		51860B212A563260006B26A3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51860B202A56325F006B26A3 /* NetworkService.swift */; };
+		51860B232A56330F006B26A3 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51860B222A56330F006B26A3 /* NetworkRequest.swift */; };
+		51860B252A563478006B26A3 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51860B242A563478006B26A3 /* Endpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		51860B1A2A5572C7006B26A3 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		51860B1C2A5572D1006B26A3 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		51860B1E2A5572F0006B26A3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		51860B202A56325F006B26A3 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		51860B222A56330F006B26A3 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
+		51860B242A563478006B26A3 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,9 @@
 		51860B0F2A554A50006B26A3 /* ApiClient */ = {
 			isa = PBXGroup;
 			children = (
+				51860B202A56325F006B26A3 /* NetworkService.swift */,
+				51860B222A56330F006B26A3 /* NetworkRequest.swift */,
+				51860B242A563478006B26A3 /* Endpoint.swift */,
 			);
 			path = ApiClient;
 			sourceTree = "<group>";
@@ -219,8 +228,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51860B212A563260006B26A3 /* NetworkService.swift in Sources */,
 				51860AFB2A5546AC006B26A3 /* MainTabBarController.swift in Sources */,
 				51860B1D2A5572D1006B26A3 /* EpisodeViewController.swift in Sources */,
+				51860B252A563478006B26A3 /* Endpoint.swift in Sources */,
 				51860B162A554BDA006B26A3 /* Episode.swift in Sources */,
 				51860B1F2A5572F0006B26A3 /* SettingsViewController.swift in Sources */,
 				51860B192A5572BA006B26A3 /* CharacterViewController.swift in Sources */,
@@ -228,6 +239,7 @@
 				51860B142A554BC2006B26A3 /* Character.swift in Sources */,
 				51860B122A554BB8006B26A3 /* Location.swift in Sources */,
 				51860AF92A5546AC006B26A3 /* SceneDelegate.swift in Sources */,
+				51860B232A56330F006B26A3 /* NetworkRequest.swift in Sources */,
 				51860B1B2A5572C7006B26A3 /* LocationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
