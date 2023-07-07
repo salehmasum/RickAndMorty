@@ -66,3 +66,7 @@ final class NetworkRequest {
     }
     
 }
+
+extension NetworkRequest {
+    static let characterListRequest = NetworkRequest(endpoint: .character)
+}

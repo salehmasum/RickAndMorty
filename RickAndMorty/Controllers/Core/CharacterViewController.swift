@@ -17,21 +17,23 @@ final class CharacterViewController: UIViewController {
         title = "Characters"
         view.backgroundColor = .systemBackground
         
-        let request = NetworkRequest(
-            endpoint: .character,
-            queryParameters: [
-                URLQueryItem(name: "name", value: "rick"),
-                URLQueryItem(name: "status", value: "alive")
-            ]
-        )
-        
-        NetworkService.shared.execute(
-            request,
-            expecting: Character.self
-        ) { result in
-                
-        }
-        
+        callCharacterListApi()
     }
+    
+    private func callCharacterListApi() {
+        NetworkService.shared.execute(
+            .characterListRequest,
+            expecting: GetAllCharacterResponse.self
+        ) { result in
+            switch result {
+            case .success(let model):
+                print("Total: "+String(model.info.pages))
+                print("Total: "+String(model.results.count))
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+    }
+    
 
 }
