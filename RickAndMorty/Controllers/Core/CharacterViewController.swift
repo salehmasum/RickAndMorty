@@ -9,31 +9,25 @@ import UIKit
 
 /// Controller to show and search for characters
 final class CharacterViewController: UIViewController {
-
+    
+    private let characterListView = CharacterListView()
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         title = "Characters"
         view.backgroundColor = .systemBackground
         
-        callCharacterListApi()
+        setupView()
     }
     
-    private func callCharacterListApi() {
-        NetworkService.shared.execute(
-            .characterListRequest,
-            expecting: GetAllCharacterResponse.self
-        ) { result in
-            switch result {
-            case .success(let model):
-                print("Total: "+String(model.info.pages))
-                print("Total: "+String(model.results.count))
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        }
+    private func setupView() {
+        view.addSubview(characterListView)
+        NSLayoutConstraint.activate([
+            characterListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            characterListView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            characterListView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
     
-
 }
