@@ -8,10 +8,18 @@
 import Foundation
 import UIKit
 
+protocol CharacterListViewDelegate: AnyObject {
+    func characterListView(
+        _ characterListView: CharacterListView,
+        didSelectCharacter character: Character
+    )
+}
+
 /// View that handle showing loader, list of characters
 final class CharacterListView: UIView {
     
     private let viewModel = CharacterListViewModel()
+    public weak var delegate: CharacterListViewDelegate?
     
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -80,6 +88,10 @@ extension CharacterListView: CharacterListViewModelDelegate {
         UIView.animate(withDuration: 0.4) {
             self.collectionView.alpha = 1
         }
+    }
+    
+    func didSelectCharacter(_ character: Character) {
+        delegate?.characterListView(self, didSelectCharacter: character)
     }
     
 }

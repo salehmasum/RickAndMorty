@@ -10,8 +10,10 @@ import UIKit
 
 protocol CharacterListViewModelDelegate: AnyObject {
     func didLoadInitialCharacters()
+    func didSelectCharacter(_ character: Character)
 }
 
+/// ViewModel to handle character list view logic
 final class CharacterListViewModel: NSObject {
     
     public weak var delegate: CharacterListViewModelDelegate?
@@ -30,7 +32,9 @@ final class CharacterListViewModel: NSObject {
     }
     
     private var cellViewModels: [CharacterCollectionViewCellViewModel] = []
+    private var apiInfo: GetAllCharacterResponseInfo? = nil
     
+    /// Fetch initial set of characters(20)
     func fetchCharacterList() {
         NetworkService.shared.execute(
             .characterListRequest,
@@ -40,6 +44,8 @@ final class CharacterListViewModel: NSObject {
             case .success(let responseModel):
                 let results = responseModel.results
                 self?.characters = results
+                let info = responseModel.info
+                self?.apiInfo = info
                 DispatchQueue.main.async {
                     self?.delegate?.didLoadInitialCharacters()
                 }
@@ -49,8 +55,20 @@ final class CharacterListViewModel: NSObject {
         }
     }
     
+    
+    /// paginate if additional characters are needed
+    public func fetchAdditionalCharacters() {
+        //Fetch characters here
+    }
+    
+    public var shouldShowLoadMoreIndicator: Bool {
+        return apiInfo?.next != nil
+    }
+    
 }
 
+
+//MARK: CollectionView Implementation
 extension CharacterListViewModel: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -78,6 +96,24 @@ extension CharacterListViewModel: UICollectionViewDelegate, UICollectionViewData
             width: width,
             height: width * 1.5
         )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let character = characters[indexPath.row]
+        delegate?.didSelectCharacter(character)
+    }
+    
+}
+
+
+//MARK: ScrollView
+extension CharacterListViewModel: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard shouldShowLoadMoreIndicator else {
+            return
+        }
+        
     }
 }
 
