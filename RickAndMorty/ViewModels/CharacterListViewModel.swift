@@ -8,16 +8,41 @@
 import Foundation
 import UIKit
 
-final class CharacterListViewModel:NSObject {
+protocol CharacterListViewModelDelegate: AnyObject {
+    func didLoadInitialCharacters()
+}
+
+final class CharacterListViewModel: NSObject {
+    
+    public weak var delegate: CharacterListViewModelDelegate?
+    
+    private var characters: [Character] = [] {
+        didSet {
+            for character in characters {
+                let viewModel = CharacterCollectionViewCellViewModel(
+                    characterName: character.name,
+                    characterStatus: character.status,
+                    characterImageUrl: URL(string: character.image)
+                )
+                cellViewModels.append(viewModel)
+            }
+        }
+    }
+    
+    private var cellViewModels: [CharacterCollectionViewCellViewModel] = []
     
     func fetchCharacterList() {
         NetworkService.shared.execute(
             .characterListRequest,
             expecting: GetAllCharacterResponse.self
-        ) { result in
+        ) { [weak self] result in
             switch result {
-            case .success(let model):
-                print("Example image url : "+String(model.results.first?.image ?? "No image"))
+            case .success(let responseModel):
+                let results = responseModel.results
+                self?.characters = results
+                DispatchQueue.main.async {
+                    self?.delegate?.didLoadInitialCharacters()
+                }
             case .failure(let error):
                 print(String(describing: error))
             }
@@ -29,7 +54,7 @@ final class CharacterListViewModel:NSObject {
 extension CharacterListViewModel: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return cellViewModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -40,11 +65,7 @@ extension CharacterListViewModel: UICollectionViewDelegate, UICollectionViewData
             fatalError("Unsupported cell")
         }
         
-        let viewModel = CharacterCollectionViewCellViewModel(
-            characterName: "Saleh Masum",
-            characterStatus: .alive,
-            characterImageUrl: URL(string: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
-        )
+        let viewModel = cellViewModels[indexPath.row]
         cell.configure(with: viewModel)
         
         return cell
